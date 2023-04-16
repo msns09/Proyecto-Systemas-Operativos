@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class ProyectoPong extends JPanel implements KeyListener, Runnable {
+   //Variables para el juego
    private static final int Ancho = 640;
    private static final int Alto = 480;
    private static final int Paleta_Ancho = 10;
@@ -16,13 +17,14 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
    private int paleta1Y, paleta2Y, BolaX, BolaY, BolaDX, BolaDY;
    private boolean arribaP1, abajoP1, arribaP2, abajoP2;
 
+   //Declara las variables de la ventana del juego, y permite el uso del teclado en el juego usando KeyListener
    public ProyectoPong() {
       setPreferredSize(new Dimension(Ancho, Alto));
       setFocusable(true);
       addKeyListener(this);
       init();
    }
-
+   //Configuraciones del juego al iniciar (Posicion de paletas y bola)
    private void init() {
       paleta1Y = (Alto - Paleta_Alto) / 2;
       paleta2Y = paleta1Y;
@@ -36,7 +38,7 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
    }
 
    private void update() {
-      // Mover paletas
+      // Mover paletas en caso de que el check de tecla presionado sea positivo en el metodo de "keyPressed"
       if (arribaP1 && paleta1Y > 0) {
          paleta1Y -= Paleta_Mover;
       }
@@ -94,13 +96,13 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
       g.setColor(Color.WHITE);
       g.fillOval(BolaX, BolaY, Bola_Tamano, Bola_Tamano);
    }
-
+   //Dibuja el fondo y la bola y paletas en la pantalla del juego
    @Override
    public void paintComponent(Graphics g) {
    super.paintComponent(g);
    draw(g);
    }
-
+   //Check de tecla presionada para mover paleta
    @Override
    public void keyPressed(KeyEvent e) {
    int keyCode = e.getKeyCode();
@@ -117,7 +119,7 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
    abajoP1 = true;
    }
    }
-
+   //Check de tecla sin presionar para no mover paleta
    @Override
    public void keyReleased(KeyEvent e) {
    int keyCode = e.getKeyCode();
@@ -134,11 +136,11 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
    abajoP1 = false;
    }
    }
-
+   // Este método no hace nada, pero se necesita para la interfaz KeyListener.
    @Override
    public void keyTyped(KeyEvent e) {
    }
-
+   //Corre el juego una vez que juegoCorre es "true" hasta que se cierra la ventana del juego. Usando "update();" el codigo hace un update de la posicion de las paletas y la bola
    @Override
    public void run() {
    while (juegoCorre) {
@@ -151,7 +153,7 @@ public class ProyectoPong extends JPanel implements KeyListener, Runnable {
    }
    }
    }
-
+   //Abre la ventana del juego
    public static void main(String[] args) {
    JFrame frame = new JFrame("Juego Pong");
    ProyectoPong juego = new ProyectoPong();
